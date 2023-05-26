@@ -9,7 +9,7 @@ import subprocess
 import shutil
 
 # global variables
-fq = json.load(open("analysis/info/fq.json", "r"))
+fq = json.load(open("../analysis/info/fq.json", "r"))
 
 ########## extract question ##########
 def extract_function_name(fun, verbose=False):
@@ -123,11 +123,11 @@ def main():
   os.system("dune clean && dune build")
   setup_output_structure()
   db = get_db()
-  collections = db.list_collection_names()
+  collections = list(filter(lambda n: 'grade' in n, db.list_collection_names()))
 
   for collection in collections:
     count = 0
-    if "HW5" in collection: continue #TODO: only process HW5 for now
+    # if "HW5" in collection: continue #TODO: only process HW5 for now
     # if "grade" not in collection: continue #TODO: only process gradeHW5
     print("\n>>> processing collection " + collection)
     clean_collection_name = collection.split("_")[0]
